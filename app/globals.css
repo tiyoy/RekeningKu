@@ -3,8 +3,83 @@ button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
 button:disabled { cursor: not-allowed; opacity: .65; }
 .account-card-wrapper[hidden] { display: none !important; }
-.toast-notification { position: fixed; left: 50%; bottom: 24px; z-index: 10000; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; transition: .25s ease; }
-.toast-notification.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* High-contrast feedback for copy actions. */
+.toast-notification {
+  position: fixed;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  min-height: 58px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: #0b1c30;
+  color: #ffffff;
+  box-shadow: 0 18px 44px rgba(5, 15, 30, 0.32), 0 4px 12px rgba(5, 15, 30, 0.2);
+  font-family: var(--font-body, Inter, sans-serif);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  text-align: left;
+  overflow-wrap: anywhere;
+  transform: translate(-50%, 22px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .28s cubic-bezier(.2, .8, .2, 1), opacity .22s ease, visibility .22s ease;
+}
+.toast-notification.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+.toast-notification__icon {
+  display: inline-flex;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #064e3b;
+  color: #6ee7b7;
+  font-size: 15px;
+}
+.toast-notification[data-state="warning"] .toast-notification__icon {
+  background: #78350f;
+  color: #fde68a;
+}
+.toast-notification[data-state="error"] .toast-notification__icon {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+.toast-notification__message {
+  min-width: 0;
+  color: #ffffff;
+}
+@media (max-width: 480px) {
+  .toast-notification {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 28px);
+    min-height: 54px;
+    gap: 10px;
+    padding: 11px 15px;
+    border-radius: 14px;
+    font-size: 13.5px;
+  }
+  .toast-notification__icon {
+    flex-basis: 30px;
+    width: 30px;
+    height: 30px;
+  }
+}
 .form-error-list { margin: 0; padding-left: 18px; }
 .qris-modal-img { cursor: zoom-in; }
 .qris-modal-img.zoomed { transform: scale(1.35); cursor: zoom-out; }

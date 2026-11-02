@@ -78,7 +78,10 @@ export default async function HomePage() {
           <div className="qris-modal-footer"><a id="qrisDownloadBtn" download="qris_barcode.png" className="btn-download-qris"><i className="fa-solid fa-download" /><span>Unduh Barcode QRIS</span></a></div>
         </div>
       </div>
-      <div className="toast-notification" id="copyToast" role="status"><span id="toastMessage">Berhasil disalin!</span></div>
+      <div className="toast-notification" id="copyToast" role="status" aria-live="polite" aria-atomic="true" data-state="success">
+        <span className="toast-notification__icon" aria-hidden="true"><i className="fa-solid fa-check" /></span>
+        <span className="toast-notification__message" id="toastMessage">Nomor rekening berhasil disalin.</span>
+      </div>
       <PublicInteractions />
     </>
   );

@@ -7,15 +7,24 @@ export default function PublicInteractions() {
     const modal = document.getElementById("qrisModal");
     const toast = document.getElementById("copyToast");
     const toastMessage = document.getElementById("toastMessage");
+    const toastIcon = toast?.querySelector(".toast-notification__icon i") as HTMLElement | null;
     let toastTimer: ReturnType<typeof setTimeout> | null = null;
     let currentNmid = "";
 
-    const showToast = (message: string) => {
+    const showToast = (message: string, state: "success" | "warning" | "error" = "success") => {
       if (!toast || !toastMessage) return;
       toastMessage.textContent = message;
+      toast.dataset.state = state;
+      if (toastIcon) {
+        toastIcon.className = state === "success"
+          ? "fa-solid fa-check"
+          : state === "warning"
+            ? "fa-solid fa-circle-exclamation"
+            : "fa-solid fa-xmark";
+      }
       toast.classList.add("show");
       if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
     };
 
     const copyToClipboard = async (text: string) => {
@@ -51,7 +60,7 @@ export default function PublicInteractions() {
 
     const openModal = (data: { url: string; downloadUrl: string; merchant: string; bank: string; nmid: string }) => {
       if (!modal) return;
-      if (!data.url) { showToast("Foto barcode QRIS belum tersedia untuk rekening ini."); return; }
+      if (!data.url) { showToast("Foto barcode QRIS belum tersedia untuk rekening ini.", "warning"); return; }
       const img = document.getElementById("qrisModalImg") as HTMLImageElement | null;
       const merchant = document.getElementById("qrisModalMerchant");
       const bank = document.getElementById("qrisModalBank");
@@ -86,7 +95,9 @@ export default function PublicInteractions() {
           copyButton.classList.add("copied");
           copyButton.innerHTML = '<i class="fa-solid fa-check"></i> <span>Tersalin!</span>';
           setTimeout(() => { copyButton.classList.remove("copied"); copyButton.innerHTML = original; }, 2000);
-          showToast(`Nomor rekening ${bank} berhasil disalin!`);
+          showToast(`Nomor rekening ${bank} berhasil disalin.`, "success");
+        } else {
+          showToast("Nomor rekening gagal disalin. Silakan coba lagi.", "error");
         }
         return;
       }
@@ -162,7 +173,11 @@ export default function PublicInteractions() {
     const image = document.getElementById("qrisModalImg");
     const keyHandler = (event: KeyboardEvent) => { if (event.key === "Escape") closeModal(); };
     const copyNmidHandler = async () => {
-      if (currentNmid && await copyToClipboard(currentNmid.replace(/\s+/g, ""))) showToast("Kode NMID berhasil disalin!");
+      if (currentNmid && await copyToClipboard(currentNmid.replace(/\s+/g, ""))) {
+        showToast("Kode NMID berhasil disalin.", "success");
+      } else if (currentNmid) {
+        showToast("Kode NMID gagal disalin. Silakan coba lagi.", "error");
+      }
     };
     const zoomHandler = () => image?.classList.toggle("zoomed");
     closeButton?.addEventListener("click", closeModal);
