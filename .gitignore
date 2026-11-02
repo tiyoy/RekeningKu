@@ -9,3 +9,5 @@ out/
 migration/legacy-admins.json
 rekeningku-tiyoy-firebase-adminsdk-fbsvc-6e6276a03b.json
 migration/legacy-accounts.json
+
+.vercel
