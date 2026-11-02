@@ -1,0 +1,1129 @@
+/* ==========================================================================
+   RekeningKu - Precision Banking Design System (Public Landing Page)
+   Reference: stitch_digital_bank_card_directory (ISO ID-1 1.586:1 Ratio)
+   ========================================================================== */
+
+:root {
+    --bg-canvas: #f8f9ff;
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --surface-card: #ffffff;
+    --text-primary: #0b1c30;
+    --text-secondary: #434655;
+    --text-muted: #737686;
+    --border-subtle: #e2e8f0;
+    --border-strong: #cbd5e1;
+    
+    --primary: #004ac6;
+    --primary-container: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    
+    --success: #10b981;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
+    --success-text: #065f46;
+    --yellow: #b7791f;
+
+    --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-card: 20px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 3px rgba(11, 28, 48, 0.05);
+    --shadow-card: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+    --shadow-hover: 0 16px 36px -6px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Page Container */
+.container {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 24px 16px 50px;
+}
+
+/* Hero Header */
+.hero-header {
+    text-align: center;
+    padding: 16px 12px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.02em;
+    box-shadow: var(--shadow-sm);
+}
+
+.brand-badge i {
+    color: var(--success);
+    font-size: 12px;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    line-height: 1.5;
+}
+
+/* Control & Filter Bar (Centered Segmented Toolbar) */
+.filter-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-bottom: 30px;
+}
+
+.filter-count {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.88);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-chips {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 5px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    gap: 4px;
+}
+
+.filter-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+}
+
+.filter-chip i {
+    font-size: 12px;
+}
+
+.filter-chip:hover {
+    color: var(--text-primary);
+    background: #f1f5f9;
+}
+
+.filter-chip.active {
+    background: var(--primary-container);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+}
+
+/* ==========================================================================
+   Compact Responsive Cards Grid (Max width ~340px-350px per card)
+   ========================================================================== */
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 345px));
+    justify-content: center;
+    gap: 20px;
+    align-items: stretch;
+}
+
+@media (max-width: 680px) {
+    .accounts-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+}
+
+/* Single Bank Account Card Container */
+.account-card-wrapper {
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.account-card-wrapper:hover {
+    transform: translateY(-4px);
+}
+
+/* ==========================================================================
+   Authentic Physical Bank ATM Card (Aspect Ratio: 1.586 / 1 ISO Standard)
+   ========================================================================== */
+.card-stage-container {
+    position: relative;
+    width: 100%;
+}
+
+.card-ambient-backglow {
+    position: absolute;
+    inset: 6px;
+    border-radius: 16px;
+    filter: blur(20px);
+    opacity: 0.4;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.account-card-wrapper:hover .card-ambient-backglow {
+    opacity: 0.6;
+}
+
+.atm-card-visual {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    aspect-ratio: 1.586 / 1; /* ISO/IEC 7810 ID-1 standard bank card ratio */
+    border-radius: 16px;
+    padding: 16px 18px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    user-select: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.28);
+    transition: transform 0.25s ease;
+}
+
+/* Realistic Gloss Texture & Sheen */
+.card-texture-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 75% 20%, rgba(255, 255, 255, 0.25) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+.card-mesh-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 8px 8px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Card Top: Chip, Contactless, Bank & Tier */
+.atm-top-bar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.card-chip-group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* EMV Smart Chip with Micro-grid Lines */
+.emv-chip {
+    width: 34px;
+    height: 24px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #fce082 0%, #dfa527 50%, #b88210 100%);
+    border: 1px solid rgba(138, 92, 0, 0.5);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.7), 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.emv-chip .chip-line-h {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.emv-chip .chip-line-h:nth-child(1) { top: 33%; }
+.emv-chip .chip-line-h:nth-child(2) { top: 66%; }
+
+.emv-chip .chip-line-v {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.emv-chip .chip-line-v:nth-child(3) { left: 40%; }
+.emv-chip .chip-line-v:nth-child(4) { right: 40%; }
+
+.contactless-wave {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    transform: rotate(90deg);
+}
+
+.card-bank-header {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.bank-name-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    line-height: 1.1;
+}
+
+.card-tier-label {
+    font-family: var(--font-heading);
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1.5px 6px;
+    border-radius: var(--radius-full);
+    margin-top: 2px;
+    backdrop-filter: blur(4px);
+    display: inline-block;
+}
+
+/* Card Middle: Account PAN Numbers & Inline Copy Button */
+.atm-mid-bar {
+    position: relative;
+    z-index: 3;
+    margin: auto 0;
+    padding: 1px 0;
+    width: 100%;
+}
+
+.account-number-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+}
+
+.card-label-small {
+    font-family: var(--font-body);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.card-account-number {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.85);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.card-account-number:hover {
+    opacity: 0.88;
+}
+
+.account-number-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.btn-toggle-number {
+    width: 27px;
+    min-width: 27px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-size: 11px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-toggle-number:hover {
+    background: rgba(255, 255, 255, 0.32);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+}
+
+.btn-toggle-number:active {
+    transform: scale(0.96);
+}
+
+.btn-toggle-number:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.account-number-actions .btn-copy-inline {
+    margin-left: 0;
+}
+
+.btn-copy,
+.btn-copy-inline,
+.btn-open-inline {
+    width: auto !important;
+    max-width: fit-content !important;
+    height: 25px;
+    min-width: 66px;
+    padding: 0 10px;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    color: #ffffff;
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    user-select: none;
+    line-height: 1;
+}
+
+.btn-copy i,
+.btn-copy-inline i,
+.btn-open-inline i {
+    font-size: 11px;
+    line-height: 1;
+}
+
+.btn-copy span,
+.btn-copy-inline span,
+.btn-open-inline span {
+    line-height: 1;
+}
+
+.btn-copy:hover,
+.btn-copy-inline:hover,
+.btn-open-inline:hover {
+    background: rgba(255, 255, 255, 0.32);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-copy:active,
+.btn-copy-inline:active,
+.btn-open-inline:active {
+    transform: scale(0.96);
+}
+
+.btn-copy.copied,
+.btn-copy-inline.copied {
+    background: #10b981 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Card Bottom: Holder Name, GPN & Circles */
+.atm-bottom-bar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-holder-name {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.card-network-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-gpn {
+    display: flex;
+    align-items: center;
+    gap: 2.5px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-heading);
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+}
+
+.badge-circle-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ef4444;
+    display: inline-block;
+}
+
+.interlocking-circles {
+    display: flex;
+    margin-left: -3px;
+}
+
+.circle-red {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.circle-amber {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f59e0b;
+    margin-left: -5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+
+
+/* Toast Notification Feedback */
+.toast-container {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #0f172a;
+    color: #ffffff;
+    padding: 14px 26px;
+    border-radius: var(--radius-full);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.toast-container.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast-icon {
+    color: var(--success);
+    font-size: 16px;
+}
+
+/* Footer */
+.public-footer {
+    text-align: center;
+    padding: 28px 16px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+    background: #ffffff;
+}
+
+/* Empty State */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: #ffffff;
+    border: 1px dashed var(--border-subtle);
+    border-radius: 20px;
+}
+
+.empty-state i {
+    font-size: 42px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Responsive Mobile Adjustments */
+@media (max-width: 680px) {
+    .container {
+        padding: 16px 14px 44px;
+    }
+
+    .hero-header {
+        padding: 18px 8px 24px;
+    }
+
+    .hero-title {
+        font-size: 26px;
+    }
+
+    .hero-subtitle {
+        font-size: 13.5px;
+    }
+
+    .accounts-grid {
+        gap: 16px;
+    }
+
+    .account-card-wrapper {
+        padding: 0;
+        border-radius: 16px;
+    }
+
+    .atm-card-visual {
+        padding: 14px 16px;
+        border-radius: 16px;
+    }
+
+    .emv-chip {
+        width: 32px;
+        height: 22px;
+    }
+
+    .bank-name-title {
+        font-size: 15px;
+    }
+
+    .card-account-number {
+        font-size: 14px;
+        letter-spacing: 0.08em;
+    }
+
+    .btn-toggle-number {
+        width: 24px;
+        min-width: 24px;
+        height: 22px;
+        font-size: 10px;
+    }
+
+    .account-number-actions {
+        gap: 5px;
+    }
+
+    .btn-copy-inline,
+    .btn-open-inline {
+        height: 22px;
+        min-width: 60px;
+        padding: 0 7px;
+        font-size: 10px;
+    }
+
+    .card-holder-name {
+        font-size: 10px;
+        max-width: 160px;
+    }
+
+    /* Filter Bar on Mobile: Native App-style Segmented Switcher */
+    .filter-bar {
+        position: relative;
+        margin-bottom: 22px;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+    }
+
+    .filter-count {
+        position: static;
+        transform: none;
+        min-height: 28px;
+        padding: 5px 10px;
+        font-size: 11px;
+        box-shadow: none;
+    }
+
+    .filter-chips {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: #e2e8f0;
+        padding: 4px;
+        border-radius: 12px;
+        border: none;
+        box-shadow: none;
+        gap: 3px;
+        width: 100%;
+    }
+
+    .filter-chip {
+        padding: 8px 2px;
+        font-size: 11.5px;
+        border-radius: 9px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        color: #64748b;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .filter-chip i {
+        font-size: 10px;
+    }
+
+    .filter-chip.active {
+        background: #ffffff;
+        color: var(--primary);
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
+        font-weight: 700;
+    }
+}
+
+/* ==========================================================================
+   QRIS Card Visual Enhancements & Action Buttons
+   ========================================================================== */
+.qris-card-icon-chip {
+    width: 34px;
+    height: 24px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.badge-qris-pill {
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #dc2626;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-action-bar {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-view-qris {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    color: var(--primary);
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-view-qris:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-view-qris:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   QRIS Modal Popup Dialog
+   ========================================================================== */
+.qris-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.qris-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.qris-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.qris-modal-card {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: scale(0.92) translateY(12px);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.qris-modal-overlay.active .qris-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.qris-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.qris-modal-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qris-badge-pill {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 0.05em;
+}
+
+.qris-modal-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.btn-close-qris-modal {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: none;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.btn-close-qris-modal:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.qris-modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fafafa;
+}
+
+.qris-image-stage {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    max-width: 280px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.qris-modal-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+}
+
+.qris-modal-meta {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.qris-meta-merchant {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.qris-meta-bank {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.qris-meta-nmid-box {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.qris-nmid-label {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.qris-nmid-value {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 12.5px;
+}
+
+.btn-copy-nmid {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+
+.btn-copy-nmid:hover {
+    color: var(--primary);
+}
+
+.qris-modal-instructions {
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    color: #1e40af;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+    line-height: 1.4;
+    width: 100%;
+}
+
+.qris-modal-instructions i {
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+.qris-modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #f1f5f9;
+    background: #ffffff;
+    border-radius: 0 0 20px 20px;
+}
+
+.btn-download-qris {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: var(--primary-container);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+}
+
+.btn-download-qris:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    color: #ffffff;
+}
